@@ -3,13 +3,14 @@ import EntityMovie from "../components/movie/Entity";
 import { useEffect, useState } from "react";
 import FilterPanel from "../components/panels/Filter";
 import { useRouter } from "next/router";
+import { API_URL } from "../config";
 
 const MoviesPage = () => {
   const router = useRouter();
   const { genre,year } = router.query;
   const [movies, setMovies] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:3001/movies")
+    fetch(`${API_URL}/movies`)
       .then((res) => res.json())
       .then((data) => {
         setMovies(data.items);
@@ -17,7 +18,7 @@ const MoviesPage = () => {
   }, []);
   useEffect(() => {
     if (!genre&&!year) return;
-    let url = "http://localhost:3001/movies?"
+    let url = `${API_URL}/movies?`
     if (genre){
       url += `genre=${genre}&`
     }
